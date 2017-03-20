@@ -143,23 +143,34 @@ function circleLayout(points, pointWidth, width, height) {
 
     secondxOffset = xOffset + Math.cos(j * Math.PI / 3) * radius 
     secondyOffset = xOffset + Math.sin(j * Math.PI / 3) * radius 
-    var x = [j,j+1].map( function(k) {
-      for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-        points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
-        points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
-      }
-      sCount++;
 
-      thirdxOffset = secondxOffset + Math.cos(k * Math.PI / 3) * radius 
-      thirdyOffset = secondyOffset + Math.sin(k * Math.PI / 3) * radius 
-      var x = [k, k+1].map( function(l) {
+    if (j < 6) {
+      var x = [j,j+1].map( function(k) {
         for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-          points[i].x = radius * Math.cos(thetaScale(i)) + thirdxOffset +  Math.cos(l * Math.PI / 3) * radius;
-          points[i].y = radius * Math.sin(thetaScale(i)) + thirdyOffset +  Math.sin(l * Math.PI / 3) * radius;
+          points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
+          points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
+        }
+        sCount++;
+
+        thirdxOffset = secondxOffset + Math.cos(k * Math.PI / 3) * radius 
+        thirdyOffset = secondyOffset + Math.sin(k * Math.PI / 3) * radius 
+        var x = [k, k+1].map( function(l) {
+          for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+            points[i].x = radius * Math.cos(thetaScale(i)) + thirdxOffset +  Math.cos(l * Math.PI / 3) * radius;
+            points[i].y = radius * Math.sin(thetaScale(i)) + thirdyOffset +  Math.sin(l * Math.PI / 3) * radius;
+          }
+          sCount++;
+        });
+      });
+    } else {
+      var x = [j].map( function(k) {
+        for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+          points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
+          points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
         }
         sCount++;
       });
-    });
+    }
   }
 
   console.log(i);
