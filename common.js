@@ -13,7 +13,7 @@ function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset
   // theta determines the spiral of the layout
   const theta = Math.PI * (3 - Math.sqrt(5));
 
-  const pointRadius = pointWidth / 3;
+  const pointRadius = pointWidth / 2.8;
 
   points.forEach((point, i) => {
     const index = (i + iOffset) % points.length;
@@ -120,19 +120,19 @@ function circleLayout(points, pointWidth, width, height) {
   var sCount = 1000;
   var radius  = (height / 2) - 0.5 * pointWidth;
 
-  for (i = 0; i < sCount * 4; i++) {
+  for (i = 0; i < sCount * 3; i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
 
   radius = (height / 8) - 0.5 * pointWidth;
 
-  for (i = (4 * sCount); i < (5 * sCount); i++) {
+  for (i = (3 * sCount); i < (4 * sCount); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
 
-  i = 5 * sCount;
+  i = 4 * sCount;
   for (j=1; j<7; j++) { 
     while ((i + 1) % sCount) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + Math.cos(j * Math.PI / 3) * radius;
