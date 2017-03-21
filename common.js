@@ -111,7 +111,7 @@ function circleLayout(points, pointWidth, width, height) {
 
   var xOffset = width / 2;
   var yOffset = height / 2;
-  const periods = 46;
+  const periods = 49;
 
   const thetaScale = d3.scaleLinear()
     .domain([0, points.length - 1])
@@ -119,22 +119,28 @@ function circleLayout(points, pointWidth, width, height) {
 
   var sCount = 3;
   var sSize = 1000;
-  var radius  = (height / 2) - 0.5 * pointWidth;
 
+  var radius  = (height / 2) - 0.5 * pointWidth;
   for (i = 0; i < (sSize * sCount); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
 
-  radius = (height / 8) - 0.5 * pointWidth;
+  var radius  = (height / 8 * 3.94) - 0.5 * pointWidth;
+  for (i = (sCount * sSize); i < (sSize * (sCount + 3)); i++) {
+    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
+    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
+  }
+  sCount = sCount + 3;
 
+  radius = (height / 8) - 0.5 * pointWidth;
   for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
   sCount++;
 
-  for (j=0; j<1; j++) { 
+  for (j=0; j<6; j++) { 
     for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + Math.cos(j * Math.PI / 3) * radius;
       points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + Math.sin(j * Math.PI / 3) * radius;
@@ -159,7 +165,7 @@ function circleLayout(points, pointWidth, width, height) {
       }
       thirdxOffset = secondxOffset + Math.cos(k * Math.PI / 3) * radius 
       thirdyOffset = secondyOffset + Math.sin(k * Math.PI / 3) * radius 
-      var x = t.map( function(l) {
+      var x = [k, k+1].map( function(l) {
         for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
           points[i].x = radius * Math.cos(thetaScale(i)) + thirdxOffset +  Math.cos(l * Math.PI / 3) * radius;
           points[i].y = radius * Math.sin(thetaScale(i)) + thirdyOffset +  Math.sin(l * Math.PI / 3) * radius;
