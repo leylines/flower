@@ -111,7 +111,7 @@ function circleLayout(points, pointWidth, width, height) {
 
   var xOffset = width / 2;
   var yOffset = height / 2;
-  const periods = 49;
+  const periods = 200;
 
   const thetaScale = d3.scaleLinear()
     .domain([0, points.length - 1])
@@ -120,6 +120,7 @@ function circleLayout(points, pointWidth, width, height) {
   var sCount = 3;
   var sSize = 1000;
 
+/**
   var radius  = (height / 2) - 0.5 * pointWidth;
   for (i = 0; i < (sSize * sCount); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
@@ -132,14 +133,37 @@ function circleLayout(points, pointWidth, width, height) {
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
   sCount = sCount + 3;
+*/
 
-  radius = (height / 8) - 0.5 * pointWidth;
-  for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
-    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
+  radius = (height / 8.0);
+  xOffset = radius;
+  yOffset = radius;
+  sinOffset = -1.0 * Math.sin(60) * radius;
+  cosOffset = -1.0 * Math.cos(60) * radius;
+
+console.log(radius);
+console.log(sinOffset);
+console.log(cosOffset);
+
+  var matrix = []
+  for (k=0; k<6; k++) { 
+    for (j=0; j<20; j++) { 
+       x = j * (cosOffset / 2);
+       y = k * (radius / 2);
+       matrix.push([x,y])    
+    }
   }
-  sCount++;
 
+  var flower = [0,2,4,6,8,41,43,45]
+  //var flower = [0,20,40];
+  flower.map( function(m) {
+    for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+      points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + matrix[m][0];
+      points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + matrix[m][1];
+    }
+    sCount++;
+  });
+/**
   for (j=0; j<6; j++) { 
     for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + Math.cos(j * Math.PI / 3) * radius;
@@ -174,6 +198,7 @@ function circleLayout(points, pointWidth, width, height) {
       });
     });
   }
+*/
 
   console.log(i);
   console.log(sCount);

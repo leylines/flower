@@ -3,7 +3,7 @@ const width = 600;
 const height = 600;
 
 // point settings
-const numPoints = 49000;
+const numPoints = 71000;
 const pointWidth = 1;
 const pointMargin = 3;
 
