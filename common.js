@@ -134,7 +134,7 @@ function circleLayout(points, pointWidth, width, height) {
   }
   sCount++;
 
-  for (j=0; j<6; j++) { 
+  for (j=0; j<1; j++) { 
     for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + Math.cos(j * Math.PI / 3) * radius;
       points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + Math.sin(j * Math.PI / 3) * radius;
@@ -144,33 +144,29 @@ function circleLayout(points, pointWidth, width, height) {
     secondxOffset = xOffset + Math.cos(j * Math.PI / 3) * radius 
     secondyOffset = xOffset + Math.sin(j * Math.PI / 3) * radius 
 
-    if (j < 6) {
-      var x = [j,j+1].map( function(k) {
+    var x = [j, j+1].map( function(k) {
+      for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+        points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
+        points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
+      }
+      sCount++;
+      var t1 = [1, 3, 5]
+      var t = [];
+      if (t1.indexOf(k) >= 0) {
+        t = [k];
+      } else {
+        t = [k, k+1];
+      }
+      thirdxOffset = secondxOffset + Math.cos(k * Math.PI / 3) * radius 
+      thirdyOffset = secondyOffset + Math.sin(k * Math.PI / 3) * radius 
+      var x = t.map( function(l) {
         for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-          points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
-          points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
-        }
-        sCount++;
-
-        thirdxOffset = secondxOffset + Math.cos(k * Math.PI / 3) * radius 
-        thirdyOffset = secondyOffset + Math.sin(k * Math.PI / 3) * radius 
-        var x = [k, k+1].map( function(l) {
-          for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-            points[i].x = radius * Math.cos(thetaScale(i)) + thirdxOffset +  Math.cos(l * Math.PI / 3) * radius;
-            points[i].y = radius * Math.sin(thetaScale(i)) + thirdyOffset +  Math.sin(l * Math.PI / 3) * radius;
-          }
-          sCount++;
-        });
-      });
-    } else {
-      var x = [j].map( function(k) {
-        for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
-          points[i].x = radius * Math.cos(thetaScale(i)) + secondxOffset +  Math.cos(k * Math.PI / 3) * radius;
-          points[i].y = radius * Math.sin(thetaScale(i)) + secondyOffset +  Math.sin(k * Math.PI / 3) * radius;
+          points[i].x = radius * Math.cos(thetaScale(i)) + thirdxOffset +  Math.cos(l * Math.PI / 3) * radius;
+          points[i].y = radius * Math.sin(thetaScale(i)) + thirdyOffset +  Math.sin(l * Math.PI / 3) * radius;
         }
         sCount++;
       });
-    }
+    });
   }
 
   console.log(i);
