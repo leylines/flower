@@ -44,7 +44,7 @@ var flower_f = [
   80,62,44,34,24,14,4,12,20,28,36,54,72,90,108,118,128,138,148,140,132,124,116,98
 ];
 
-var radius  = (height / 10) - 0.2 * pointWidth;
+var radius  = (height / 10) - 0.4 * pointWidth;
 
 gridXOffset = Math.sqrt(Math.pow(radius,2) - (Math.pow((radius /2),2)));
 gridYOffset = radius / 2.0;
@@ -70,7 +70,7 @@ const toFlower_2 = (points) => flowerLayout(points, pointWidth + pointMargin, wi
 const toFlower_3 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_3, radius);
 const toFlower_4 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_4, radius);
 
-var tree_radius  = (height / 40) - 0.2 * pointWidth;
+var tree_radius  = (height / 30);
 
 /** Treematrix
   40,
@@ -178,8 +178,8 @@ const canvas = d3.select('body').append('canvas')
 canvas.node().getContext('2d').scale(screenScale, screenScale);
 
 // start off as a grid
-toPhyllotaxis(points);
-//toTree(points);
+//toPhyllotaxis(points);
+toFlower_f(points);
 draw();
 
 d3.select('body').append('div')

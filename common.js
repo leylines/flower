@@ -75,8 +75,8 @@ function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius)
   var sCount = 0;
   var sSize = 1000;
 
-  var xOffset = 44;
-  var yOffset = 34;
+  var xOffset = 42;
+  var yOffset = 32;
 
   symbol.map( function(m) {
     for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
