@@ -8,7 +8,7 @@ const pointWidth = 1;
 const pointMargin = 3;
 
 // animation settings
-const duration = 2500;
+const duration = 4000;
 const ease = d3.easeCubic;
 let timer;
 let currLayout = 0;
@@ -100,7 +100,7 @@ const toPhyllotaxis = (points) => phyllotaxisLayout(points,
 
 // store the layouts in an array to sequence through
 //const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
-const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
+const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f];
 
 // draw the points based on their current layout
 function draw() {
