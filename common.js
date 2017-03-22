@@ -1,5 +1,4 @@
 /**
- * Given a set of points, lay them out in a phyllotaxis layout.
  * Mutates the `points` passed in by updating the x and y values.
  *
  * @param {Object[]} points The array of points to update. Will get `x` and `y` set.
@@ -9,11 +8,16 @@
  *
  * @return {Object[]} points with modified x and y
  */
+
+/**
+ * Given a set of points, lay them out in a phyllotaxis layout.
+ * Mutates the `points` passed in by updating the x and y values.
+ */
 function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset = 0) {
   // theta determines the spiral of the layout
   const theta = Math.PI * (3 - Math.sqrt(5));
 
-  const pointRadius = pointWidth / 2.8;
+  const pointRadius = pointWidth / 3.42;
 
   points.forEach((point, i) => {
     const index = (i + iOffset) % points.length;
@@ -30,13 +34,6 @@ function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset
 /**
  * Given a set of points, lay them out randomly.
  * Mutates the `points` passed in by updating the x and y values.
- *
- * @param {Object[]} points The array of points to update. Will get `x` and `y` set.
- * @param {Number} pointWidth The size in pixels of the point's width. Should also include margin.
- * @param {Number} width The width of the area to place them in
- * @param {Number} height The height of the area to place them in
- *
- * @return {Object[]} points with modified x and y
  */
 function randomLayout(points, pointWidth, width, height) {
   points.forEach((point, i) => {
@@ -48,44 +45,11 @@ function randomLayout(points, pointWidth, width, height) {
 }
 
 /**
- * Given a set of points, lay them out in a spiral.
- * Mutates the `points` passed in by updating the x and y values.
- *
- * @param {Object[]} points The array of points to update. Will get `x` and `y` set.
- * @param {Number} pointWidth The size in pixels of the point's width. Should also include margin.
- * @param {Number} width The width of the area to place them in
- * @param {Number} height The height of the area to place them in
- *
- * @return {Object[]} points with modified x and y
- */
-function spiralLayout(points, pointWidth, width, height) {
-  const amplitude = 0.3 * (height / 2);
-  const xOffset = width / 2;
-  const yOffset = height / 2;
-  const periods = 20;
-
-  const rScale = d3.scaleLinear()
-    .domain([0, points.length -1])
-    .range([0, Math.min(width / 2, height / 2) - pointWidth]);
-
-  const thetaScale = d3.scaleLinear()
-    .domain([0, points.length - 1])
-    .range([0, periods * 2 * Math.PI]);
-
-  points.forEach((point, i) => {
-    point.x = rScale(i) * Math.cos(thetaScale(i)) + xOffset
-    point.y = rScale(i) * Math.sin(thetaScale(i)) + yOffset;
-  });
-
-  return points;
-}
-
-/**
  * Generate an object array of `numPoints` length with unique IDs
  * and assigned colors
  */
 function createPoints(numPoints, pointWidth, width, height) {
-  const colorScale = d3.scaleSequential(d3.interpolateViridis)
+  const colorScale = d3.scaleSequential(d3.interpolateRainbow)
     .domain([numPoints - 1, 0]);
 
   const points = d3.range(numPoints).map(id => ({
@@ -99,51 +63,22 @@ function createPoints(numPoints, pointWidth, width, height) {
 /**
  * Given a set of points, lay them out in a spiral.
  * Mutates the `points` passed in by updating the x and y values.
- *
- * @param {Object[]} points The array of points to update. Will get `x` and `y` set.
- * @param {Number} pointWidth The size in pixels of the point's width. Should also include margin.
- * @param {Number} width The width of the area to place them in
- * @param {Number} height The height of the area to place them in
- *
- * @return {Object[]} points with modified x and y
  */
-function circleLayout(points, pointWidth, width, height) {
+function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius) {
 
-  var xOffset = width / 2;
-  var yOffset = height / 2;
-  const periods = 40;
+  const periods = 64;
 
   const thetaScale = d3.scaleLinear()
     .domain([0, points.length - 1])
     .range([0, periods * 2 * Math.PI]);
 
-  var sCount = 3;
+  var sCount = 0;
   var sSize = 1000;
 
-  var radius  = (height / 2) - 0.5 * pointWidth;
-  for (i = 0; i < (sSize * sCount); i++) {
-    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
-    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
-  }
+  var xOffset = 44;
+  var yOffset = 34;
 
-  var radius  = (height / 8) - 0.2 * pointWidth;
-  xOffset = radius / 2 + 3;
-  yOffset = radius / 2 + 5;
-  //sinOffset = -1.0 * Math.sin(60) * radius;
-  //cosOffset = -1.0 * Math.cos(60) * radius;
-  cosOffset = Math.sqrt(Math.pow(radius,2) - (Math.pow((radius /2),2)));
-
-  var matrix = []
-  for (k=1.0; k<8.0; k++) { 
-    for (j=1.0; j<17.0; j++) { 
-       x = j * (radius / 2.0);
-       y = k * (cosOffset);
-       matrix.push([x,y])    
-    }
-  }
-
-  var flower = [3,5,7,9,18,20,22,24,26,33,35,37,39,41,43,48,50,52,54,56,58,60,65,67,69,71,73,75,82,84,86,88,90,99,101,103,105];
-  flower.map( function(m) {
+  symbol.map( function(m) {
     for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + matrix[m][0];
       points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + matrix[m][1];
@@ -151,9 +86,77 @@ function circleLayout(points, pointWidth, width, height) {
     sCount++;
   });
 
+  xOffset = width / 2;
+  yOffset = height / 2;
+  radius  = (height / 2) - 0.5 * pointWidth;
 
-  console.log(i);
+  for (i =(sCount * sSize); i < ((sCount + 3) * sSize); i++) {
+    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
+    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
+  }
+  sCount = sCount + 3;
+  return points;
+}
+
+/**
+ * Given a set of points, lay them out in a spiral.
+ * Mutates the `points` passed in by updating the x and y values.
+ */
+function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
+
+  const periods = 64;
+
+  const thetaScale = d3.scaleLinear()
+    .domain([0, points.length - 1])
+    .range([0, periods * 2 * Math.PI]);
+
+  var sCount = 0;
+  var sSize = 1000;
+
+  var xOffset = 44;
+  var yOffset = 34;
+
+  symbol.map( function(m) {
+    for (i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
+      points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + matrix[m][0];
+      points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + matrix[m][1];
+    }
+    sCount = sCount + 2;
+  });
+
+  var lines = [
+    [40,48],[40,50],[48,50],
+    [48,66],[50,68],[66,68],
+    [40,76],[48,76],[50,76],
+    [66,76],[68,76],[66,84],
+    [68,86],[84,76],[86,76],
+    [84,86],[76,94],[84,94],
+    [86,94],[84,112],[86,112],
+    [94,112]
+  ];
+  lines.map( function(m) {
+
+    var width  = matrix[m[1]][0] - matrix[m[0]][0];
+    var height = matrix[m[1]][1] - matrix[m[0]][1];
+
+    var xScale = d3.scaleLinear()
+      .domain([0, 2000])
+      .range([0, width]);
+    var yScale = d3.scaleLinear()
+      .domain([0, 2000])
+      .range([0, height]);
+
+    var j = 0;
+    for (i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
+      points[i].x = matrix[m[0]][0] + xScale(j) + xOffset;
+      points[i].y = matrix[m[0]][1] + yScale(j) + yOffset;
+      j++;
+    }
+    sCount = sCount + 2;
+  });
+  
   console.log(sCount);
   return points;
+
 }
 

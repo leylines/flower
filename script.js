@@ -3,7 +3,7 @@ const width = 600;
 const height = 600;
 
 // point settings
-const numPoints = 40000;
+const numPoints = 64000;
 const pointWidth = 1;
 const pointMargin = 3;
 
@@ -16,20 +16,90 @@ let currLayout = 0;
 // create set of points
 const points = createPoints(numPoints, pointWidth, width, height);
 
+/** Flowermatrix
+8    4,
+7    12,14,
+6    20,22,24,
+5    28,30,32,34,
+4    36,38,40,42,44,
+3    46,48,50,52,
+2    54,56,58,60,62,
+1    64,66,68,70,
+m    72,74,76,78,80,
+1    82,84,86,88,
+2    90,92,94,96,98,
+3    100,102,104,106,
+4    108,110,112,114,116,
+5    118,120,122,124,
+6    128,130,132,
+7    138,140,
+8    148
+*/
+
+var flower_f = [
+  76,
+  68,58,66,84,94,86,
+  78,60,50,40,48,56,74,92,102,112,104,96,
+  70,52,42,32,22,30,38,46,64,82,100,110,120,130,122,114,106,88,
+  80,62,44,34,24,14,4,12,20,28,36,54,72,90,108,118,128,138,148,140,132,124,116,98
+];
+
+var radius  = (height / 10) - 0.2 * pointWidth;
+
+gridXOffset = Math.sqrt(Math.pow(radius,2) - (Math.pow((radius /2),2)));
+gridYOffset = radius / 2.0;
+
+var matrix = []
+for (k=1.0; k<18.0; k++) {
+  for (j=1.0; j<10.0; j++) {
+     x = j * (gridXOffset);
+     y = k * (gridYOffset);
+     matrix.push([x,y])
+  }
+}
+
+var flower_1 = flower_f.slice(0, 1);
+var flower_2 = flower_f.slice(0, 7);
+var flower_3 = flower_f.slice(0, 19);
+var flower_4 = flower_f.slice(0, 37);
+
 // wrap layout helpers so they only take points as an argument
-const toGrid = (points) => gridLayout(points,
-  pointWidth + pointMargin, width);
-const toSine = (points) => sineLayout(points,
-  pointWidth + pointMargin, width, height);
-const toSpiral = (points) => spiralLayout(points,
-  pointWidth + pointMargin, width, height);
-const toCircle = (points) => circleLayout(points,
-  pointWidth + pointMargin, width, height);
+const toFlower_f = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_f, radius);
+const toFlower_1 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_1, radius);
+const toFlower_2 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_2, radius);
+const toFlower_3 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_3, radius);
+const toFlower_4 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_4, radius);
+
+var tree_radius  = (height / 40) - 0.2 * pointWidth;
+
+/** Treematrix
+  40,
+  48,50,
+  66,68,
+  76,
+  84,86,
+  94,
+  112
+*/
+
+var tree_circles = [
+  76,
+  68,66,
+  84,86,
+  94,
+  50,40,
+  48,
+  112
+];
+
+const toTree = (points) => treeLayout(points,
+  pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
+
 const toPhyllotaxis = (points) => phyllotaxisLayout(points,
   pointWidth + pointMargin, width / 2, height / 2);
 
 // store the layouts in an array to sequence through
-const layouts = [toPhyllotaxis, toCircle, toSpiral];
+const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
 
 // draw the points based on their current layout
 function draw() {
@@ -107,7 +177,8 @@ const canvas = d3.select('body').append('canvas')
 canvas.node().getContext('2d').scale(screenScale, screenScale);
 
 // start off as a grid
-toCircle(points);
+toPhyllotaxis(points);
+//toTree(points);
 draw();
 
 d3.select('body').append('div')
