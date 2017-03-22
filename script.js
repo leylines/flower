@@ -99,7 +99,8 @@ const toPhyllotaxis = (points) => phyllotaxisLayout(points,
   pointWidth + pointMargin, width / 2, height / 2);
 
 // store the layouts in an array to sequence through
-const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
+//const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
+const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
 
 // draw the points based on their current layout
 function draw() {
