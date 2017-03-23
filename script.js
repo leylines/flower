@@ -150,7 +150,8 @@ const canvas = d3.select('body').append('canvas')
 canvas.node().getContext('2d').scale(screenScale, screenScale);
 
 // start off as a grid
-toPhyllotaxis(points);
+//toPhyllotaxis(points);
+toMeta(points);
 draw();
 
 d3.select('body').append('div')

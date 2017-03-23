@@ -188,16 +188,16 @@ function metaLayout(points, pointWidth, width, height, matrix, symbol, radius) {
 
   var lines = [
     [76,44],[76,4],[76,36],[76,108],[76,148],[76,116],
-    [60,56],[56,92],[92,96],[96,60],
+    [56,92],[96,60],
+    [96,40],[40,92],[60,56],
+    [56,112],[112,60],[92,96],
     [60,40],[40,56],[56,92],[92,112],[112,96],[96,60],
-    [44,36],[36,108],[108,116],[116,44],
-    [44,4],[4,36],[36,108],[108,148],[148,116],[116,44],
+    [44,56],[4,92],[36,112],[108,96],[148,60],[116,40],
+    [44,112],[4,96],[36,60],[108,40],[148,56],[116,92],
+    [36,108],[116,44],
     [116,4],[4,108],[108,116],
     [44,36],[36,148],[148,44],
-    [96,40],[40,92],[92,96],
-    [60,56],[56,112],[112,60],
-    [44,56],[4,92],[36,112],[108,96],[148,60],[116,40],
-    [44,112],[4,96],[36,60],[108,40],[148,56],[116,92]
+    [44,4],[4,36],[36,108],[108,148],[148,116],[116,44],
 
   ];
 
@@ -226,11 +226,11 @@ function metaLayout(points, pointWidth, width, height, matrix, symbol, radius) {
   yOffset = height / 2;
   radius  = (height / 2) - 0.5 * pointWidth;
 
-  for (var i =(sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+  for (var i =(sCount * sSize); i < ((sCount + 5) * sSize); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
-  sCount = sCount + 1;
+  sCount = sCount + 5;
   console.log(sCount);
   
   return points;
