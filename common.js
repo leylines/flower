@@ -61,7 +61,7 @@ function createPoints(numPoints, pointWidth, width, height) {
 }
 
 /**
- * Given a set of points, lay them out in a spiral.
+ * Given a set of points, lay them out in a flower of life.
  * Mutates the `points` passed in by updating the x and y values.
  */
 function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius) {
@@ -99,7 +99,7 @@ function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius)
 }
 
 /**
- * Given a set of points, lay them out in a spiral.
+ * Given a set of points, lay them out in a tree of life.
  * Mutates the `points` passed in by updating the x and y values.
  */
 function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
