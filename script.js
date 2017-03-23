@@ -46,14 +46,14 @@ var flower_f = [
 
 var radius  = (height / 10) - 0.4 * pointWidth;
 
-gridXOffset = Math.sqrt(Math.pow(radius,2) - (Math.pow((radius /2),2)));
-gridYOffset = radius / 2.0;
+var gridXOffset = Math.sqrt(Math.pow(radius,2) - (Math.pow((radius /2),2)));
+var gridYOffset = radius / 2.0;
 
 var matrix = []
-for (k=1.0; k<18.0; k++) {
-  for (j=1.0; j<10.0; j++) {
-     x = j * (gridXOffset);
-     y = k * (gridYOffset);
+for (var k=1.0; k<18.0; k++) {
+  for (var j=1.0; j<10.0; j++) {
+     var x = j * (gridXOffset);
+     var y = k * (gridYOffset);
      matrix.push([x,y])
   }
 }
@@ -95,8 +95,7 @@ var tree_circles = [
 const toTree = (points) => treeLayout(points,
   pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
 
-const toPhyllotaxis = (points) => phyllotaxisLayout(points,
-  pointWidth + pointMargin, width / 2, height / 2);
+const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
 
 // store the layouts in an array to sequence through
 //const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];

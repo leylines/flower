@@ -13,7 +13,7 @@
  * Given a set of points, lay them out in a phyllotaxis layout.
  * Mutates the `points` passed in by updating the x and y values.
  */
-function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset = 0) {
+function phyllotaxisLayout(points, pointWidth, xOffset=0 , yOffset=0, iOffset=0) {
   // theta determines the spiral of the layout
   const theta = Math.PI * (3 - Math.sqrt(5));
 
@@ -79,7 +79,7 @@ function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius)
   var yOffset = 32;
 
   symbol.map( function(m) {
-    for (i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
+    for (var i = (sCount * sSize); i < ((sCount + 1) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + matrix[m][0];
       points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + matrix[m][1];
     }
@@ -90,7 +90,7 @@ function flowerLayout(points, pointWidth, width, height, matrix, symbol, radius)
   yOffset = height / 2;
   radius  = (height / 2) - 0.5 * pointWidth;
 
-  for (i =(sCount * sSize); i < ((sCount + 3) * sSize); i++) {
+  for (var i =(sCount * sSize); i < ((sCount + 3) * sSize); i++) {
     points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
     points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
   }
@@ -117,7 +117,7 @@ function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
   var yOffset = 34;
 
   symbol.map( function(m) {
-    for (i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
+    for (var i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
       points[i].x = radius * Math.cos(thetaScale(i)) + xOffset + matrix[m][0];
       points[i].y = radius * Math.sin(thetaScale(i)) + yOffset + matrix[m][1];
     }
@@ -147,7 +147,7 @@ function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
       .range([0, height]);
 
     var j = 0;
-    for (i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
+    for (var i = (sCount * sSize); i < ((sCount + 2) * sSize); i++) {
       points[i].x = matrix[m[0]][0] + xScale(j) + xOffset;
       points[i].y = matrix[m[0]][1] + yScale(j) + yOffset;
       j++;
@@ -155,8 +155,6 @@ function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
     sCount = sCount + 2;
   });
   
-  console.log(sCount);
   return points;
-
 }
 
