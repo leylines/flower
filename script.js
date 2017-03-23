@@ -16,26 +16,6 @@ let currLayout = 0;
 // create set of points
 const points = createPoints(numPoints, pointWidth, width, height);
 
-/** Flowermatrix
-8    4,
-7    12,14,
-6    20,22,24,
-5    28,30,32,34,
-4    36,38,40,42,44,
-3    46,48,50,52,
-2    54,56,58,60,62,
-1    64,66,68,70,
-m    72,74,76,78,80,
-1    82,84,86,88,
-2    90,92,94,96,98,
-3    100,102,104,106,
-4    108,110,112,114,116,
-5    118,120,122,124,
-6    128,130,132,
-7    138,140,
-8    148
-*/
-
 var flower_f = [
   76,
   68,58,66,84,94,86,
@@ -71,17 +51,6 @@ const toFlower_3 = (points) => flowerLayout(points, pointWidth + pointMargin, wi
 const toFlower_4 = (points) => flowerLayout(points, pointWidth + pointMargin, width, height, matrix, flower_4, radius);
 
 var tree_radius  = (height / 30);
-
-/** Treematrix
-  40,
-  48,50,
-  66,68,
-  76,
-  84,86,
-  94,
-  112
-*/
-
 var tree_circles = [
   76,
   68,66,
@@ -91,15 +60,19 @@ var tree_circles = [
   48,
   112
 ];
+const toTree = (points) => treeLayout(points, pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
 
-const toTree = (points) => treeLayout(points,
-  pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
+var meta_circles = [
+  76,
+  60,40,56,92,112,,96,
+  44,4,36,108,148,116
+];
+const toMeta = (points) => metaLayout(points, pointWidth + pointMargin, width, height, matrix, meta_circles, radius);
 
 const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
 
 // store the layouts in an array to sequence through
-//const layouts = [toTree, toFlower_1, toFlower_2, toFlower_3, toFlower_4, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis];
-const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f];
+const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f, toMeta];
 
 // draw the points based on their current layout
 function draw() {
@@ -178,7 +151,6 @@ canvas.node().getContext('2d').scale(screenScale, screenScale);
 
 // start off as a grid
 toPhyllotaxis(points);
-//toFlower_f(points);
 draw();
 
 d3.select('body').append('div')
