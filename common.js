@@ -186,17 +186,42 @@ function metaLayout(points, pointWidth, width, height, matrix, symbol, radius) {
     sCount = sCount + 1;
   });
 
-  var lines = [
-    [76,44],[76,4],[76,36],[76,108],[76,148],[76,116],
-    [96,40],[40,92],[60,56],
-    [56,112],[112,60],[92,96],
-    [60,40],[40,56],[56,92],[92,112],[112,96],[96,60],
-    [44,56],[4,92],[36,112],[108,96],[148,60],[116,40],
-    [44,112],[4,96],[36,60],[108,40],[148,56],[116,92],
-    [116,4],[4,108],[108,116],
-    [44,36],[36,148],[148,44],
-    [44,4],[4,36],[36,108],[108,148],[148,116],[116,44],
+  xOffset = width / 2;
+  yOffset = height / 2;
+  radius  = (height / 2) - 0.5 * pointWidth;
 
+  for (var i =(sCount * sSize); i < ((sCount + 6) * sSize); i++) {
+    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
+    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
+  }
+  sCount = sCount + 6;
+
+  var xOffset = 42;
+  var yOffset = 32;
+
+  var lines = [
+    [4,20],[20,36],
+    [4,24],[24,44],
+    [36,40],[40,44],
+    [36,72],[72,108],
+    [44,80],[80,116],
+    [56,60],[92,96],
+    [4,92],[4,96],
+    [36,112],[36,148],
+    [44,112],[44,148],
+    [36,60],[36,76],
+    [44,56],[44,76],
+    [56,112],[40,92],
+    [60,112],[40,96],
+    [108,96],[108,76],
+    [116,92],[116,76],
+    [108,112],[112,116],
+    [4,76],[76,148],
+    [108,4],[108,40],
+    [116,4],[116,40],
+    [108,148],[56,148],
+    [116,148],[60,148],
+    [56,92],[60,96]
   ];
 
   lines.map( function(m) {
@@ -220,15 +245,6 @@ function metaLayout(points, pointWidth, width, height, matrix, symbol, radius) {
     sCount = sCount + 1;
   });
 
-  xOffset = width / 2;
-  yOffset = height / 2;
-  radius  = (height / 2) - 0.5 * pointWidth;
-
-  for (var i =(sCount * sSize); i < ((sCount + 2) * sSize); i++) {
-    points[i].x = radius * Math.cos(thetaScale(i)) + xOffset;
-    points[i].y = radius * Math.sin(thetaScale(i)) + yOffset;
-  }
-  sCount = sCount + 2;
   console.log(sCount);
   
   return points;

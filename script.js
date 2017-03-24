@@ -56,23 +56,23 @@ var tree_circles = [
   68,66,
   84,86,
   94,
-  50,40,
+  40,50,
   48,
-  112
+  112,
 ];
 const toTree = (points) => treeLayout(points, pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
 
 var meta_circles = [
-  76,
-  60,40,56,92,112,,96,
-  44,4,36,108,148,116
+  76,76,60,44,56,36,92,108,96,116,112,148,40,4
 ];
+
 const toMeta = (points) => metaLayout(points, pointWidth + pointMargin, width, height, matrix, meta_circles, radius);
 
 const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
 
 // store the layouts in an array to sequence through
-const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f, toMeta];
+const layouts = [toTree, toFlower_3, toFlower_f, toPhyllotaxis, toFlower_f, toPhyllotaxis, toMeta];
+//const layouts = [toTree, toMeta, toTree, toMeta];
 
 // draw the points based on their current layout
 function draw() {
@@ -150,8 +150,8 @@ const canvas = d3.select('body').append('canvas')
 canvas.node().getContext('2d').scale(screenScale, screenScale);
 
 // start off as a grid
-//toPhyllotaxis(points);
-toMeta(points);
+toPhyllotaxis(points);
+//toMeta(points);
 draw();
 
 d3.select('body').append('div')
