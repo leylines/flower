@@ -123,7 +123,10 @@ function animate(layout) {
     });
 
     // update what is drawn on screen
+    requestAnimationFrame( draw );
     draw();
+    var selection = d3.select('canvas')
+    capturer.capture( selection.node() );
 
     // if this animation is over
     if (t === 1) {
@@ -149,12 +152,23 @@ const canvas = d3.select('body').append('canvas')
   .on('click', function () {
     d3.select('.play-control').style('display', '');
     timer.stop();
+    capturer.save();
+    capturer.stop();
   });
 canvas.node().getContext('2d').scale(screenScale, screenScale);
 
-// start off as a grid
+// start off as phyllotaxis
 toPhyllotaxis(points);
-//toMeta(points);
+
+var capturer = new CCapture( {
+  autoSaveTime: 1,
+  format: 'webm',
+  framerate: 20,
+  name: 'metatron',
+  display: true,
+  verbose: true
+});
+
 draw();
 
 d3.select('body').append('div')
@@ -162,6 +176,7 @@ d3.select('body').append('div')
   .text('PLAY')
   .on('click', function () {
     // start the animation
+    capturer.start();
     animate(layouts[currLayout]);
 
     // remove the play control
