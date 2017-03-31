@@ -116,7 +116,7 @@ function animate(layout) {
     });
 
     // update what is drawn on screen
-    requestAnimationFrame( draw );
+    //requestAnimationFrame( draw );
     draw();
     var selection = d3.select('canvas')
     capturer.capture( selection.node() );
