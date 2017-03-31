@@ -52,20 +52,13 @@ const toFlower_4 = (points) => flowerLayout(points, pointWidth + pointMargin, wi
 
 var tree_radius  = (height / 30);
 var tree_circles = [
-  76,
-  68,66,
-  84,86,
-  94,
-  40,50,
-  48,
-  112,
+  76,60,56,92,96,112,4,24,20,148
 ];
 const toTree = (points) => treeLayout(points, pointWidth + pointMargin, width, height, matrix, tree_circles, tree_radius);
 
 var meta_circles = [
   76,76,60,44,56,36,92,108,96,116,112,148,40,4
 ];
-
 const toMeta = (points) => metaLayout(points, pointWidth + pointMargin, width, height, matrix, meta_circles, radius);
 
 const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);

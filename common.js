@@ -125,6 +125,27 @@ function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
     sCount = sCount + 2;
   });
 
+/** Treematrix small
+4  40,
+3  48,50,
+1  66,68,
+m  76,
+1  84,86,
+2  94,
+4  112
+*/
+
+/** Treematrix big
+4  4,
+3  20,24,
+1  56,60,
+m  76,
+1  92,96,
+2  112,
+4  148
+*/
+
+/** small
   var lines = [
     [40,48],[40,50],[48,50],
     [48,66],[50,68],[66,68],
@@ -134,6 +155,18 @@ function treeLayout(points, pointWidth, width, height, matrix, symbol, radius) {
     [84,86],[76,94],[84,94],
     [86,94],[84,112],[86,112],
     [94,112]
+  ];
+*/
+
+  var lines = [
+    [4,20],[4,24],[20,24],
+    [20,56],[24,60],[56,60],
+    [4,76],[20,76],[24,76],
+    [56,76],[60,76],[56,92],
+    [60,96],[92,76],[96,76],
+    [92,96],[76,112],[92,112],
+    [96,112],[92,148],[96,148],
+    [112,148]
   ];
 
   lines.map( function(m) {
